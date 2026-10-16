@@ -8,7 +8,7 @@
 <meta property="og:title" content="You're invited to a graduation party 🎓">
 <meta property="og:description" content="Join us in celebrating. Tap to open your invitation.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;500&family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --base:#e3c7d5;      /* main brand colour */
@@ -114,6 +114,30 @@ h2{font-family:'Great Vibes',cursive;font-weight:400;font-size:clamp(3rem,13vw,5
 .value{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-top:2px}
 .value small{display:block;font-size:1rem;font-weight:400;opacity:.8}
 
+/* Language switch */
+.lang{display:inline-flex;gap:4px;padding:4px;border:1px solid var(--mid);border-radius:30px;background:#ffffffaa;backdrop-filter:blur(6px)}
+.lang button{font:inherit;font-family:'Montserrat','Tajawal',sans-serif;font-size:.75rem;letter-spacing:.08em;cursor:pointer;border:0;background:transparent;color:var(--deep);
+  padding:7px 14px;border-radius:24px;transition:.25s}
+.lang button:hover{background:#8c4a6c1a}
+.lang button.on{background:var(--deep);color:var(--lighter)}
+#intro .lang{position:absolute;top:18px;inset-inline-end:18px;animation:rise-in 1s .8s both}
+.lang-main{display:flex;width:max-content;margin:0 auto 16px}
+
+/* Arabic / RTL */
+[dir=rtl] body{font-family:'Tajawal',sans-serif}
+[dir=rtl] *{letter-spacing:0!important}
+[dir=rtl] .eyebrow,[dir=rtl] .label,[dir=rtl] .title,[dir=rtl] .unit span,[dir=rtl] .hint,[dir=rtl] .btn,[dir=rtl] #intro p,[dir=rtl] .actions a,[dir=rtl] .actions button{text-transform:none}
+[dir=rtl] h1,[dir=rtl] h2,[dir=rtl] .name,[dir=rtl] #party{font-family:'Aref Ruqaa','Amiri',serif;font-weight:700;line-height:1.5}
+[dir=rtl] #intro h1{font-size:clamp(2.4rem,9vw,3.8rem)}
+[dir=rtl] h2{font-size:clamp(2.4rem,10.5vw,4rem)}
+[dir=rtl] .name{font-size:clamp(2.8rem,12vw,4.4rem);line-height:1.4}
+[dir=rtl] .sub,[dir=rtl] .degree,[dir=rtl] .value,[dir=rtl] .note,[dir=rtl] .num,[dir=rtl] .title{font-family:'Amiri',serif}
+[dir=rtl] .title{font-size:1.3rem}
+[dir=rtl] .eyebrow,[dir=rtl] .label{font-size:.85rem}
+[dir=rtl] .unit span{font-size:.8rem}
+[dir=rtl] .place .hint{font-size:.8rem;font-family:'Tajawal',sans-serif}
+[dir=rtl] .actions a,[dir=rtl] .actions button{font-family:'Tajawal',sans-serif;font-size:.85rem}
+
 /* Countdown */
 .count{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:8px 0 4px}
 .unit{border:1px solid var(--mid);border-radius:12px;padding:14px 4px;background:var(--base);background:linear-gradient(160deg,#ffffff99,var(--base));
@@ -139,90 +163,122 @@ h2{font-family:'Great Vibes',cursive;font-weight:400;font-size:clamp(3rem,13vw,5
 <div class="floaters" id="floaters"></div>
 <canvas id="confetti"></canvas>
 
-<div id="intro" role="button" tabindex="0" aria-label="Open invitation">
+<div id="intro" role="button" tabindex="0">
+  <div class="lang" role="group" aria-label="Language"><button type="button" data-lang="en">EN</button><button type="button" data-lang="ar">عربي</button></div>
   <div class="cap">🎓</div>
-  <h1>You're Invited</h1>
-  <p>A graduation celebration</p>
-  <div class="btn">Open Invitation</div>
+  <h1 data-i18n="inv"></h1>
+  <p data-i18n="introSub"></p>
+  <div class="btn" data-i18n="open"></div>
 </div>
 
 <main id="main">
+  <div class="lang lang-main" role="group" aria-label="Language"><button type="button" data-lang="en">EN</button><button type="button" data-lang="ar">عربي</button></div>
   <section class="card">
-    <div class="eyebrow">Please join us to celebrate</div>
-    <div class="hat" id="hat" title="Toss the cap!">🎓</div>
-    <h2>Graduation Party</h2>
-    <div class="sub">in honor of the graduate</div>
-    <div class="title">The Pharmacist</div>
+    <div class="eyebrow" data-i18n="eyebrow"></div>
+    <div class="hat" id="hat">🎓</div>
+    <h2 data-i18n="h2"></h2>
+    <div class="sub" data-i18n="sub"></div>
+    <div class="title" data-i18n="title"></div>
     <div class="name" id="name"></div>
     <div class="degree" id="degree"></div>
 
     <div class="divider"></div>
 
     <div class="details">
-      <div><div class="label">When</div>
+      <div><div class="label" data-i18n="whenL"></div>
         <div class="value" id="when"></div></div>
-      <div><div class="label">Where</div>
+      <div><div class="label" data-i18n="whereL"></div>
         <a class="value place" id="where" target="_blank" rel="noopener"></a></div>
     </div>
 
     <div class="divider"></div>
 
-    <div class="label" style="margin-bottom:12px" id="cdlabel">The celebration begins in</div>
+    <div class="label" style="margin-bottom:12px" id="cdlabel" data-i18n="cd"></div>
     <div class="count" id="count">
-      <div class="unit"><div class="num" id="d">0</div><span>Days</span></div>
-      <div class="unit"><div class="num" id="h">0</div><span>Hours</span></div>
-      <div class="unit"><div class="num" id="m">0</div><span>Minutes</span></div>
-      <div class="unit"><div class="num" id="s">0</div><span>Seconds</span></div>
+      <div class="unit"><div class="num" id="d">0</div><span data-i18n="days"></span></div>
+      <div class="unit"><div class="num" id="h">0</div><span data-i18n="hours"></span></div>
+      <div class="unit"><div class="num" id="m">0</div><span data-i18n="minutes"></span></div>
+      <div class="unit"><div class="num" id="s">0</div><span data-i18n="seconds"></span></div>
     </div>
-    <div id="party">It's party time! 🎉</div>
+    <div id="party" data-i18n="party"></div>
 
     <iframe id="map" loading="lazy" title="Map" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
     <div class="actions">
-      <a class="primary" id="dir" target="_blank" rel="noopener">Get Directions</a>
+      <a class="primary" id="dir" target="_blank" rel="noopener" data-i18n="dir"></a>
       <a id="rsvp" target="_blank" rel="noopener">RSVP</a>
-      <button id="fx">🎉 Celebrate</button>
+      <button id="fx" data-i18n="fx"></button>
     </div>
     <div class="note" id="note"></div>
   </section>
 </main>
 
 <script>
-/* ============ EDIT THESE DETAILS ============ */
+/* ============ EDIT THESE DETAILS (texts for EN/AR are in STR below) ============ */
 const CONFIG = {
-  name: "Yasmeen",                 // her name
-  degree: "Class of 2026",               // e.g. "Bachelor of Science in Nursing"
   // Local time of the event, format: YYYY-MM-DDTHH:MM:SS
   start: "2026-10-23T20:00:00+03:00",   // 8 PM Amman time
   durationHours: 2,
-  dateText: "",                          // leave "" to auto-format from start
-  placeName: "Zarqa, Jordan",
   address: "",
   mapLink: "https://maps.app.goo.gl/58cVsYkvRon6kXWi9",
   mapQuery: "",                          // leave "" to use the address
-  rsvpWhatsApp: "",                      // digits only with country code, e.g. "15551234567"
-  note: "Your presence is the greatest gift. Come share this special moment with us!"
+  rsvpWhatsApp: ""                       // digits only with country code, e.g. "15551234567"
 };
 /* ============================================ */
 
 const $=id=>document.getElementById(id);
 const start=new Date(CONFIG.start), end=new Date(start.getTime()+CONFIG.durationHours*36e5);
-$('name').textContent=CONFIG.name;
-$('degree').textContent=CONFIG.degree;
-$('when').innerHTML=(CONFIG.dateText||start.toLocaleDateString('en-GB',{timeZone:'Asia/Amman',weekday:'long',month:'long',day:'numeric',year:'numeric'}))
-  +'<small>'+start.toLocaleTimeString('en-US',{timeZone:'Asia/Amman',hour:'numeric',minute:'2-digit'})+' – '+end.toLocaleTimeString('en-US',{timeZone:'Asia/Amman',hour:'numeric',minute:'2-digit'})+' (Amman time)</small>';
-$('where').href=CONFIG.mapLink||('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(CONFIG.placeName));
-$('where').innerHTML='<span class="pin">📍</span><span class="ptxt">'+CONFIG.placeName+'</span><small class="hint">Tap to open in Google Maps ↗</small>';
-$('note').textContent=CONFIG.note;
-document.title=CONFIG.name+" – Graduation Party";
 
-const q=encodeURIComponent(CONFIG.mapQuery||CONFIG.address||CONFIG.placeName);
+const STR={
+  en:{docTitle:"Yasmeen – Graduation Party",inv:"You're Invited",introSub:"A graduation celebration",open:"Open Invitation",
+    eyebrow:"Please join us to celebrate",h2:"Graduation Party",sub:"in honor of the graduate",title:"The Pharmacist",
+    name:"Yasmeen",degree:"Class of 2026",whenL:"When",whereL:"Where",place:"Zarqa, Jordan",hint:"Tap to open in Google Maps ↗",
+    cd:"The celebration begins in",days:"Days",hours:"Hours",minutes:"Minutes",seconds:"Seconds",party:"It's party time! 🎉",
+    dir:"Get Directions",fx:"🎉 Celebrate",hat:"Toss the cap!",
+    note:"Your presence is the greatest gift. Come share this special moment with us!",locale:"en-GB",tloc:"en-US"},
+  ar:{docTitle:"ياسمين – حفل التخرّج",inv:"أنتم مدعوون",introSub:"حفل تخرّج",open:"افتح الدعوة",
+    eyebrow:"يسعدنا حضوركم للاحتفال معنا",h2:"حفل التخرّج",sub:"تكريمًا للخريجة",title:"الصيدلانية",
+    name:"ياسمين",degree:"دفعة 2026",whenL:"الموعد",whereL:"المكان",place:"الزرقاء، الأردن",hint:"اضغط للفتح في خرائط جوجل ↖",
+    cd:"يبدأ الاحتفال بعد",days:"أيام",hours:"ساعات",minutes:"دقائق",seconds:"ثوانٍ",party:"حان وقت الحفل! 🎉",
+    dir:"الاتجاهات",fx:"🎉 احتفل",hat:"ارمِ القبعة!",
+    note:"حضوركم أجمل هدية. شاركونا هذه اللحظة المميزة!",locale:"ar-JO-u-nu-latn",tloc:"ar-JO-u-nu-latn"}
+};
+
+/* Language: saved choice, otherwise the device language */
+let lang='en';
+try{lang=localStorage.getItem('lang')||''}catch(e){}
+if(!STR[lang]){
+  const dl=((navigator.languages&&navigator.languages[0])||navigator.language||'en').toLowerCase();
+  lang=dl.startsWith('ar')?'ar':'en';
+}
+function render(){
+  const T=STR[lang],tz='Asia/Amman',fmt={timeZone:tz,hour:'numeric',minute:'2-digit'};
+  document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+  document.title=T.docTitle;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=T[el.dataset.i18n]});
+  $('hat').title=T.hat;
+  $('name').textContent=T.name;
+  $('degree').textContent=T.degree;
+  $('when').innerHTML=start.toLocaleDateString(T.locale,{timeZone:tz,weekday:'long',month:'long',day:'numeric',year:'numeric'})
+    +'<small>'+(lang==='ar'?'من <bdi>'+start.toLocaleTimeString(T.tloc,fmt)+'</bdi> إلى <bdi>'+end.toLocaleTimeString(T.tloc,fmt)+'</bdi>'
+      :start.toLocaleTimeString(T.tloc,fmt)+' – '+end.toLocaleTimeString(T.tloc,fmt))+'</small>';
+  $('where').href=CONFIG.mapLink||('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(STR.en.place));
+  $('where').innerHTML='<span class="pin">📍</span><span class="ptxt">'+T.place+'</span><small class="hint">'+T.hint+'</small>';
+  $('note').textContent=T.note;
+  document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.lang===lang));
+  update();
+}
+document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',e=>{
+  e.stopPropagation();lang=b.dataset.lang;try{localStorage.setItem('lang',lang)}catch(_){}render();
+}));
+
+const q=encodeURIComponent(CONFIG.mapQuery||CONFIG.address||STR.en.place);
 $('dir').href=CONFIG.mapLink||'https://www.google.com/maps/dir/?api=1&destination='+q;
 if(!CONFIG.mapLink && CONFIG.address){
   const f=$('map');f.src='https://maps.google.com/maps?q='+q+'&output=embed';f.style.display='block';
 }
 if(CONFIG.rsvpWhatsApp){
-  $('rsvp').href='https://wa.me/'+CONFIG.rsvpWhatsApp+'?text='+encodeURIComponent("Hi! I'll be at "+CONFIG.name+"'s graduation party 🎓");
+  $('rsvp').href='https://wa.me/'+CONFIG.rsvpWhatsApp+'?text='+encodeURIComponent("Hi! I'll be at "+STR.en.name+"'s graduation party 🎓");
 }else $('rsvp').style.display='none';
 
 /* Countdown */
@@ -239,7 +295,26 @@ function update(){
   setNum('m',Math.floor(diff/6e4)%60);
   setNum('s',Math.floor(diff/1e3)%60);
 }
-update();setInterval(update,1000);
+setInterval(update,1000);
+
+/* Sparkle sound (synthesised, no audio files) */
+let ac;
+function sparkle(){
+  try{
+    ac=ac||new (window.AudioContext||window.webkitAudioContext)();
+    if(ac.state==='suspended')ac.resume();
+    const t0=ac.currentTime,notes=[1318.5,1568,1760,2093,2349.3,2637,3136,3520];
+    for(let i=0;i<16;i++){
+      const t=t0+i*0.065+Math.random()*0.03,f=notes[Math.floor(Math.random()*notes.length)];
+      [[f,'sine',0.11],[f*2,'triangle',0.04]].forEach(([fr,ty,vol])=>{
+        const o=ac.createOscillator(),g=ac.createGain();
+        o.type=ty;o.frequency.value=Math.min(fr,6000);
+        g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+0.01);g.gain.exponentialRampToValueAtTime(0.0001,t+0.55);
+        o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+0.6);
+      });
+    }
+  }catch(e){}
+}
 
 /* Confetti */
 const cv=$('confetti'),cx=cv.getContext('2d');let parts=[],run=false;
@@ -257,8 +332,8 @@ function loop(){
   parts=parts.filter(p=>p.life<160&&p.y<cv.height+40);
   if(parts.length)requestAnimationFrame(loop);else{run=false;cx.clearRect(0,0,cv.width,cv.height)}
 }
-$('fx').onclick=()=>burst();
-$('hat').onclick=()=>burst(80);
+$('fx').onclick=()=>{burst();sparkle()};
+$('hat').onclick=()=>{burst(80);sparkle()};
 
 /* Floating hearts/petals */
 (function(){const f=$('floaters');
@@ -271,6 +346,7 @@ function open(){
   $('intro').classList.add('hide');$('main').classList.add('show');
   setTimeout(()=>burst(180),500);
 }
+render();
 $('intro').onclick=open;
 $('intro').onkeydown=e=>{if(e.key==='Enter'||e.key===' ')open()};
 </script>
