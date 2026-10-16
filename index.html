@@ -80,13 +80,18 @@ main.show .card>*:nth-child(9){animation-delay:1.9s}
 main.show .card>*:nth-child(10){animation-delay:2.05s}
 main.show .card>*:nth-child(11){animation-delay:2.2s}
 main.show .card>*:nth-child(12){animation-delay:2.35s}
+main.show .card>*:nth-child(13){animation-delay:2.47s}
+main.show .card>*:nth-child(14){animation-delay:2.59s}
+main.show .card>*:nth-child(15){animation-delay:2.71s}
+main.show .card>*:nth-child(16){animation-delay:2.83s}
 .eyebrow{letter-spacing:.35em;font-size:.7rem;text-transform:uppercase;color:var(--deep)}
 .hat{font-size:3.2rem;margin:10px 0 0;display:inline-block;cursor:pointer;transition:transform .5s;animation:bob 3s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-8px) rotate(6deg)}}
 .hat:hover{transform:rotate(-20deg) scale(1.25)}
 h2{font-family:'Great Vibes',cursive;font-weight:400;font-size:clamp(3rem,13vw,5rem);color:var(--deep);line-height:1.05;margin:6px 0 2px}
 .sub{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-style:italic;opacity:.85}
-.name{font-family:'Great Vibes',cursive;font-size:clamp(2.8rem,12vw,4.6rem);margin:14px 0 4px;
+.title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;letter-spacing:.4em;text-transform:uppercase;font-weight:600;color:var(--gold);margin-top:16px}
+.name{font-family:'Great Vibes',cursive;font-size:clamp(2.8rem,12vw,4.6rem);margin:0 0 4px;
   background:linear-gradient(90deg,var(--deep),var(--gold),#d9a7c2,var(--deep));-webkit-background-clip:text;background-clip:text;color:transparent;
   background-size:300% auto;animation:shine 5s linear infinite}
 @keyframes shine{to{background-position:300% center}}
@@ -138,6 +143,7 @@ h2{font-family:'Great Vibes',cursive;font-weight:400;font-size:clamp(3rem,13vw,5
     <div class="hat" id="hat" title="Toss the cap!">🎓</div>
     <h2>Graduation Party</h2>
     <div class="sub">in honor of the graduate</div>
+    <div class="title">The Pharmacist</div>
     <div class="name" id="name"></div>
     <div class="degree" id="degree"></div>
 
