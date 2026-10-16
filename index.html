@@ -100,6 +100,15 @@ h2{font-family:'Great Vibes',cursive;font-weight:400;font-size:clamp(3rem,13vw,5
 .divider::after{content:"✦";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--lighter);padding:0 8px;color:var(--deep);font-size:.8rem;
   animation:spin 6s linear infinite}
 @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.place{display:block;text-decoration:none;color:var(--plum);border:1.5px dashed var(--mid);border-radius:14px;padding:12px 16px;
+  background:#ffffff80;transition:.25s;cursor:pointer}
+.place .ptxt{border-bottom:2px solid var(--deep);padding-bottom:1px}
+.place .pin{display:inline-block;margin-right:6px;animation:drop 1.8s ease-in-out infinite}
+@keyframes drop{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.place .hint{font-family:'Montserrat',sans-serif;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--deep);opacity:1;margin-top:6px;font-weight:500}
+.place:hover,.place:focus-visible{background:var(--deep);color:var(--lighter);border-style:solid;border-color:var(--deep);transform:translateY(-3px);box-shadow:0 10px 22px #8c4a6c44;outline:none}
+.place:hover .hint,.place:focus-visible .hint{color:var(--lighter)}
+.place:hover .ptxt,.place:focus-visible .ptxt{border-color:var(--lighter)}
 .details{display:grid;gap:18px}
 .label{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--deep)}
 .value{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-top:2px}
@@ -153,7 +162,7 @@ h2{font-family:'Great Vibes',cursive;font-weight:400;font-size:clamp(3rem,13vw,5
       <div><div class="label">When</div>
         <div class="value" id="when"></div></div>
       <div><div class="label">Where</div>
-        <div class="value" id="where"></div></div>
+        <a class="value place" id="where" target="_blank" rel="noopener"></a></div>
     </div>
 
     <div class="divider"></div>
@@ -181,14 +190,14 @@ h2{font-family:'Great Vibes',cursive;font-weight:400;font-size:clamp(3rem,13vw,5
 <script>
 /* ============ EDIT THESE DETAILS ============ */
 const CONFIG = {
-  name: "Yasmeen Ali",                 // her name
+  name: "Yasmeen",                 // her name
   degree: "Class of 2026",               // e.g. "Bachelor of Science in Nursing"
   // Local time of the event, format: YYYY-MM-DDTHH:MM:SS
   start: "2026-10-23T20:00:00+03:00",   // 8 PM Amman time
   durationHours: 2,
   dateText: "",                          // leave "" to auto-format from start
-  placeName: "Amman, Jordan",
-  address: "Tap Get Directions for the exact location",
+  placeName: "Zarqa, Jordan",
+  address: "",
   mapLink: "https://maps.app.goo.gl/58cVsYkvRon6kXWi9",
   mapQuery: "",                          // leave "" to use the address
   rsvpWhatsApp: "",                      // digits only with country code, e.g. "15551234567"
@@ -202,11 +211,12 @@ $('name').textContent=CONFIG.name;
 $('degree').textContent=CONFIG.degree;
 $('when').innerHTML=(CONFIG.dateText||start.toLocaleDateString('en-GB',{timeZone:'Asia/Amman',weekday:'long',month:'long',day:'numeric',year:'numeric'}))
   +'<small>'+start.toLocaleTimeString('en-US',{timeZone:'Asia/Amman',hour:'numeric',minute:'2-digit'})+' – '+end.toLocaleTimeString('en-US',{timeZone:'Asia/Amman',hour:'numeric',minute:'2-digit'})+' (Amman time)</small>';
-$('where').innerHTML=CONFIG.placeName+'<small>'+CONFIG.address+'</small>';
+$('where').href=CONFIG.mapLink||('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(CONFIG.placeName));
+$('where').innerHTML='<span class="pin">📍</span><span class="ptxt">'+CONFIG.placeName+'</span><small class="hint">Tap to open in Google Maps ↗</small>';
 $('note').textContent=CONFIG.note;
 document.title=CONFIG.name+" – Graduation Party";
 
-const q=encodeURIComponent(CONFIG.mapQuery||CONFIG.address);
+const q=encodeURIComponent(CONFIG.mapQuery||CONFIG.address||CONFIG.placeName);
 $('dir').href=CONFIG.mapLink||'https://www.google.com/maps/dir/?api=1&destination='+q;
 if(!CONFIG.mapLink && CONFIG.address){
   const f=$('map');f.src='https://maps.google.com/maps?q='+q+'&output=embed';f.style.display='block';
