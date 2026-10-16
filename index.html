@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Graduation Party Invitation</title>
+<meta name="description" content="You're invited to a graduation celebration!">
+<meta property="og:title" content="You're invited to a graduation party 🎓">
+<meta property="og:description" content="Join us in celebrating. Tap to open your invitation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0e1a3a; --navy2:#1b2c5e; --gold:#d4af37; --gold2:#f3dc8a; --cream:#fbf6e9;
+}
+*{box-sizing:border-box;margin:0}
+html,body{min-height:100%}
+body{
+  font-family:'Montserrat',sans-serif;color:var(--cream);
+  background:radial-gradient(ellipse at top,var(--navy2),var(--navy) 70%) fixed;
+  overflow-x:hidden;
+}
+canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+.stars{position:fixed;inset:0;pointer-events:none;
+  background-image:radial-gradient(1.5px 1.5px at 20% 30%,#fff8,transparent),
+  radial-gradient(1.5px 1.5px at 70% 20%,#fff8,transparent),
+  radial-gradient(1px 1px at 40% 80%,#fff6,transparent),
+  radial-gradient(1.5px 1.5px at 85% 65%,#fff8,transparent),
+  radial-gradient(1px 1px at 10% 70%,#fff6,transparent);
+  animation:tw 4s ease-in-out infinite alternate}
+@keyframes tw{to{opacity:.4}}
+
+/* Envelope intro */
+#intro{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at top,var(--navy2),var(--navy) 70%);transition:opacity .9s,visibility .9s;cursor:pointer;padding:16px;text-align:center}
+#intro.hide{opacity:0;visibility:hidden}
+.cap{font-size:5rem;animation:float 3s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-14px) rotate(-6deg)}}
+#intro h1{font-family:'Great Vibes',cursive;font-size:clamp(2.4rem,9vw,4rem);color:var(--gold2);margin:12px 0 6px;font-weight:400}
+#intro p{letter-spacing:.3em;font-size:.75rem;text-transform:uppercase;opacity:.8}
+.btn{display:inline-block;margin-top:28px;padding:14px 34px;border:1.5px solid var(--gold);color:var(--gold2);
+  border-radius:40px;letter-spacing:.2em;font-size:.8rem;text-transform:uppercase;background:transparent;animation:pulse 2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 22px #d4af3766}}
+
+/* Card */
+main{max-width:640px;margin:0 auto;padding:40px 16px 60px;opacity:0;transform:translateY(30px) scale(.97);transition:all 1s .3s}
+main.show{opacity:1;transform:none}
+.card{
+  position:relative;padding:44px 26px 36px;text-align:center;border-radius:6px;
+  background:linear-gradient(160deg,#16255a,#0b1430);
+  border:1px solid var(--gold);box-shadow:0 20px 60px #0009,inset 0 0 0 8px #0b1430,inset 0 0 0 9px #d4af3766;
+}
+.eyebrow{letter-spacing:.35em;font-size:.7rem;text-transform:uppercase;color:var(--gold)}
+.hat{font-size:3.2rem;margin:10px 0 0;display:inline-block;cursor:pointer;transition:transform .5s}
+.hat:hover{transform:rotate(-20deg) scale(1.2)}
+h2{font-family:'Great Vibes',cursive;font-weight:400;font-size:clamp(3rem,13vw,5rem);color:var(--gold2);line-height:1.05;margin:6px 0 2px}
+.sub{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-style:italic;opacity:.9}
+.name{font-family:'Great Vibes',cursive;font-size:clamp(2.6rem,11vw,4.2rem);margin:14px 0 4px;
+  background:linear-gradient(90deg,var(--gold),#fff6c8,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;
+  background-size:200% auto;animation:shine 4s linear infinite}
+@keyframes shine{to{background-position:200% center}}
+.degree{font-family:'Cormorant Garamond',serif;font-size:1.2rem;letter-spacing:.08em}
+.divider{margin:26px auto;width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);position:relative}
+.divider::after{content:"✦";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#101d47;padding:0 8px;color:var(--gold);font-size:.8rem}
+.details{display:grid;gap:18px}
+.label{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.value{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-top:2px}
+.value small{display:block;font-size:1rem;font-weight:400;opacity:.8}
+
+/* Countdown */
+.count{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:8px 0 4px}
+.unit{border:1px solid #d4af3766;border-radius:10px;padding:14px 4px;background:#ffffff08}
+.num{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,8vw,2.8rem);font-weight:600;color:var(--gold2);line-height:1}
+.num.tick{animation:tick .35s}
+@keyframes tick{50%{transform:scale(1.15)}}
+.unit span{display:block;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;margin-top:6px;opacity:.75}
+#party{display:none;font-family:'Great Vibes',cursive;font-size:2.6rem;color:var(--gold2)}
+
+.actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:26px}
+.actions a,.actions button{font:inherit;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;text-decoration:none;cursor:pointer;
+  padding:12px 20px;border-radius:30px;border:1.5px solid var(--gold);color:var(--gold2);background:transparent;transition:.25s}
+.actions .primary{background:var(--gold);color:var(--navy);font-weight:500}
+.actions a:hover,.actions button:hover{background:var(--gold);color:var(--navy);transform:translateY(-2px)}
+.note{margin-top:22px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;opacity:.85}
+#map{margin-top:18px;border:0;width:100%;height:240px;border-radius:10px;filter:saturate(.8);display:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<canvas id="confetti"></canvas>
+
+<div id="intro" role="button" tabindex="0" aria-label="Open invitation">
+  <div class="cap">🎓</div>
+  <h1>You're Invited</h1>
+  <p>A graduation celebration</p>
+  <div class="btn">Open Invitation</div>
+</div>
+
+<main id="main">
+  <section class="card">
+    <div class="eyebrow">Please join us to celebrate</div>
+    <div class="hat" id="hat" title="Toss the cap!">🎓</div>
+    <h2>Graduation Party</h2>
+    <div class="sub">in honor of the graduate</div>
+    <div class="name" id="name"></div>
+    <div class="degree" id="degree"></div>
+
+    <div class="divider"></div>
+
+    <div class="details">
+      <div><div class="label">When</div>
+        <div class="value" id="when"></div></div>
+      <div><div class="label">Where</div>
+        <div class="value" id="where"></div></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="label" style="margin-bottom:12px" id="cdlabel">The celebration begins in</div>
+    <div class="count" id="count">
+      <div class="unit"><div class="num" id="d">0</div><span>Days</span></div>
+      <div class="unit"><div class="num" id="h">0</div><span>Hours</span></div>
+      <div class="unit"><div class="num" id="m">0</div><span>Minutes</span></div>
+      <div class="unit"><div class="num" id="s">0</div><span>Seconds</span></div>
+    </div>
+    <div id="party">It's party time! 🎉</div>
+
+    <iframe id="map" loading="lazy" title="Map" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+    <div class="actions">
+      <a class="primary" id="dir" target="_blank" rel="noopener">Get Directions</a>
+      <button id="cal">Add to Calendar</button>
+      <a id="rsvp" target="_blank" rel="noopener">RSVP</a>
+      <button id="fx">🎉 Celebrate</button>
+    </div>
+    <div class="note" id="note"></div>
+  </section>
+</main>
+
+<script>
+/* ============ EDIT THESE DETAILS ============ */
+const CONFIG = {
+  name: "Yasmeen Ali",                 // her name
+  degree: "Class of 2026",               // e.g. "Bachelor of Science in Nursing"
+  // Local time of the event, format: YYYY-MM-DDTHH:MM:SS
+  start: "2026-10-23T20:00:00+03:00",   // 8 PM Amman time
+  durationHours: 2,
+  dateText: "",                          // leave "" to auto-format from start
+  placeName: "Amman, Jordan",
+  address: "Tap Get Directions for the exact location",
+  mapLink: "https://maps.app.goo.gl/58cVsYkvRon6kXWi9",
+  mapQuery: "",                          // leave "" to use the address
+  rsvpWhatsApp: "",                      // digits only with country code, e.g. "15551234567"
+  note: "Come hungry, leave happy. We can't wait to celebrate with you!"
+};
+/* ============================================ */
+
+const $=id=>document.getElementById(id);
+const start=new Date(CONFIG.start), end=new Date(start.getTime()+CONFIG.durationHours*36e5);
+$('name').textContent=CONFIG.name;
+$('degree').textContent=CONFIG.degree;
+$('when').innerHTML=(CONFIG.dateText||start.toLocaleDateString('en-GB',{timeZone:'Asia/Amman',weekday:'long',month:'long',day:'numeric',year:'numeric'}))
+  +'<small>'+start.toLocaleTimeString('en-US',{timeZone:'Asia/Amman',hour:'numeric',minute:'2-digit'})+' – '+end.toLocaleTimeString('en-US',{timeZone:'Asia/Amman',hour:'numeric',minute:'2-digit'})+' (Amman time)</small>';
+$('where').innerHTML=CONFIG.placeName+'<small>'+CONFIG.address+'</small>';
+$('note').textContent=CONFIG.note;
+document.title=CONFIG.name+" – Graduation Party";
+
+const q=encodeURIComponent(CONFIG.mapQuery||CONFIG.address);
+$('dir').href=CONFIG.mapLink||'https://www.google.com/maps/dir/?api=1&destination='+q;
+if(!CONFIG.mapLink && CONFIG.address){
+  const f=$('map');f.src='https://maps.google.com/maps?q='+q+'&output=embed';f.style.display='block';
+}
+if(CONFIG.rsvpWhatsApp){
+  $('rsvp').href='https://wa.me/'+CONFIG.rsvpWhatsApp+'?text='+encodeURIComponent("Hi! I'll be at "+CONFIG.name+"'s graduation party 🎓");
+}else $('rsvp').style.display='none';
+
+/* Countdown */
+let prev={};
+function setNum(id,v){
+  const el=$(id),t=String(v).padStart(2,'0');
+  if(prev[id]!==t){el.textContent=t;el.classList.remove('tick');void el.offsetWidth;el.classList.add('tick');prev[id]=t}
+}
+function update(){
+  let diff=start-new Date();
+  if(diff<=0){$('count').style.display='none';$('cdlabel').style.display='none';$('party').style.display='block';return}
+  setNum('d',Math.floor(diff/864e5));
+  setNum('h',Math.floor(diff/36e5)%24);
+  setNum('m',Math.floor(diff/6e4)%60);
+  setNum('s',Math.floor(diff/1e3)%60);
+}
+update();setInterval(update,1000);
+
+/* Add to calendar (.ics) */
+$('cal').onclick=()=>{
+  const f=d=>d.toISOString().replace(/[-:]|\.\d{3}/g,'');
+  const ics=['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT',
+    'DTSTART:'+f(start),'DTEND:'+f(end),
+    'SUMMARY:'+CONFIG.name+' Graduation Party',
+    'LOCATION:'+CONFIG.placeName+', '+CONFIG.address,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download='graduation-party.ics';a.click();
+};
+
+/* Confetti */
+const cv=$('confetti'),cx=cv.getContext('2d');let parts=[],run=false;
+function size(){cv.width=innerWidth;cv.height=innerHeight}size();addEventListener('resize',size);
+function burst(n=140){
+  const cols=['#d4af37','#f3dc8a','#ffffff','#7fa6ff','#ff9ec4'];
+  for(let i=0;i<n;i++)parts.push({x:innerWidth/2,y:innerHeight*.45,vx:(Math.random()-.5)*16,vy:-Math.random()*15-3,
+    w:6+Math.random()*6,h:4+Math.random()*6,r:Math.random()*6,vr:(Math.random()-.5)*.4,c:cols[i%cols.length],life:0});
+  if(!run){run=true;loop()}
+}
+function loop(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  parts.forEach(p=>{p.vy+=.28;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.life++;
+    cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;cx.globalAlpha=Math.max(0,1-p.life/160);cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore()});
+  parts=parts.filter(p=>p.life<160&&p.y<cv.height+40);
+  if(parts.length)requestAnimationFrame(loop);else{run=false;cx.clearRect(0,0,cv.width,cv.height)}
+}
+$('fx').onclick=()=>burst();
+$('hat').onclick=()=>burst(80);
+
+/* Open intro */
+function open(){
+  $('intro').classList.add('hide');$('main').classList.add('show');
+  setTimeout(()=>burst(180),500);
+}
+$('intro').onclick=open;
+$('intro').onkeydown=e=>{if(e.key==='Enter'||e.key===' ')open()};
+</script>
+</body>
+</html>
