@@ -109,6 +109,7 @@ h2{font-family:'Great Vibes',cursive;font-weight:400;font-size:clamp(3rem,13vw,5
 .place .ptxt{border-bottom:2px solid var(--deep);padding-bottom:1px}
 .place .pin{display:inline-block;margin-right:6px;animation:drop 1.8s ease-in-out infinite}
 @keyframes drop{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.place .city{margin-top:4px}
 .place .hint{font-family:'Montserrat',sans-serif;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--deep);opacity:1;margin-top:6px;font-weight:500}
 .place:hover,.place:focus-visible{background:var(--deep);color:var(--lighter);border-style:solid;border-color:var(--deep);transform:translateY(-3px);box-shadow:0 10px 22px #8c4a6c44;outline:none}
 .place:hover .hint,.place:focus-visible .hint{color:var(--lighter)}
@@ -237,13 +238,13 @@ const start=new Date(CONFIG.start), end=new Date(start.getTime()+CONFIG.duration
 const STR={
   en:{docTitle:"Yasmeen – Graduation Party",inv:"You're Invited",introSub:"A graduation celebration",open:"Open Invitation",
     eyebrow:"Please join us to celebrate",h2:"Graduation Party",sub:"in honor of the graduate",title:"The Pharmacist",
-    name:"Yasmeen",degree:"Class of 2026",whenL:"When",whereL:"Where",place:"Zarqa, Jordan",hint:"Tap to open in Google Maps ↗",
+    name:"Yasmeen",degree:"Class of 2026",whenL:"When",whereL:"Where",place:"Al-Marashdeh Madafa",city:"Zarqa, Jordan",hint:"Tap to open in Google Maps ↗",
     cd:"The celebration begins in",days:"Days",hours:"Hours",minutes:"Minutes",seconds:"Seconds",party:"It's party time! 🎉",
     dir:"Get Directions",fx:"🎉 Celebrate",hat:"Toss the cap!",
     note:"Your presence is the greatest gift. Come share this special moment with us!",locale:"en-GB",tloc:"en-US"},
   ar:{docTitle:"ياسمين – حفل تخرجي",inv:"إنتوا معزومين",introSub:"حفل تخرّج",open:"افتح الدعوة",
     eyebrow:"يسعدني حضوركم للاحتفال معي",h2:"حفل تخرجي",sub:"",title:"الصيدلانية",
-    name:"ياسمين",degree:"دفعة 2026",whenL:"الموعد",whereL:"المكان",place:"الزرقاء، الأردن",hint:"اضغط للفتح في خرائط جوجل ↖",
+    name:"ياسمين",degree:"دفعة 2026",whenL:"الموعد",whereL:"المكان",place:"مضافة المراشدة",city:"الزرقاء، الأردن",hint:"اضغط للفتح في خرائط جوجل ↖",
     cd:"يبدأ الاحتفال بعد",days:"أيام",hours:"ساعات",minutes:"دقائق",seconds:"ثوانٍ",party:"حان وقت الحفل! 🎉",
     dir:"الاتجاهات",fx:"🎉 احتفل",hat:"ارمِ القبعة!",
     note:"مستنيتكم بكامل كشختكم وطلتكم الحلوة (الحفل نسائي) 🥳🎉",locale:"ar-JO-u-nu-latn",tloc:"ar-JO-u-nu-latn"}
@@ -267,8 +268,8 @@ function render(){
   $('when').innerHTML=start.toLocaleDateString(T.locale,{timeZone:tz,weekday:'long',month:'long',day:'numeric',year:'numeric'})
     +'<small>'+(lang==='ar'?'من <bdi>'+start.toLocaleTimeString(T.tloc,fmt)+'</bdi> إلى <bdi>'+end.toLocaleTimeString(T.tloc,fmt)+'</bdi>'
       :start.toLocaleTimeString(T.tloc,fmt)+' – '+end.toLocaleTimeString(T.tloc,fmt))+'</small>';
-  $('where').href=CONFIG.mapLink||('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(STR.en.place));
-  $('where').innerHTML='<span class="pin">📍</span><span class="ptxt">'+T.place+'</span><small class="hint">'+T.hint+'</small>';
+  $('where').href=CONFIG.mapLink||('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(STR.en.place+' '+STR.en.city));
+  $('where').innerHTML='<span class="pin">📍</span><span class="ptxt">'+T.place+'</span><small class="city">'+T.city+'</small><small class="hint">'+T.hint+'</small>';
   $('note').textContent=T.note;
   document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.lang===lang));
   update();
@@ -277,7 +278,7 @@ document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',
   e.stopPropagation();lang=b.dataset.lang;try{localStorage.setItem('lang',lang)}catch(_){}render();
 }));
 
-const q=encodeURIComponent(CONFIG.mapQuery||CONFIG.address||STR.en.place);
+const q=encodeURIComponent(CONFIG.mapQuery||CONFIG.address||STR.en.place+' '+STR.en.city);
 $('dir').href=CONFIG.mapLink||'https://www.google.com/maps/dir/?api=1&destination='+q;
 if(!CONFIG.mapLink && CONFIG.address){
   const f=$('map');f.src='https://maps.google.com/maps?q='+q+'&output=embed';f.style.display='block';
